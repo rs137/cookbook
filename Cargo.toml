@@ -1,0 +1,7 @@
+[package]
+name = "cookbook"
+version = "0.1.0"
+authors = ["Rick"]
+
+[dependencies]
+clap = "2.32.0"
