@@ -18,7 +18,7 @@ fn main() {
     let command_names = CommandNames::create();
     let (help_message, arg_matches) = prepare_cli_parsing(&command_names);
 
-    match handle_arguments(&modules, &command_names, arg_matches, help_message) {
+    match handle_arguments(&modules, &command_names, &arg_matches, help_message) {
         Ok(module) => {
             let run_result = match module {
                 Some(m) => m.run(),
@@ -54,8 +54,8 @@ fn prepare_cli_parsing<'a>(command_names: &CommandNames<'a>) -> (String, ArgMatc
     (help_message_string, matches)
 }
 
-fn handle_arguments<'a>(modules: &'a Vec<Box<app::CliModule>>, command_names: &CommandNames,
-                    args: ArgMatches, help_message: String)
+fn handle_arguments<'a>(modules: &'a [Box<app::CliModule>], command_names: &CommandNames,
+                    args: &ArgMatches, help_message: String)
     -> result::Result<Option<&'a Box<app::CliModule>>, String> {
     let module = args.value_of(command_names.module_command_name);
     match args.subcommand_matches(command_names.list_command_name) {
